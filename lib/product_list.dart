@@ -1,5 +1,6 @@
 import 'package:add_to_card_provider/cart_model.dart';
 import 'package:add_to_card_provider/cart_provider.dart';
+import 'package:add_to_card_provider/cart_screen.dart';
 import 'package:add_to_card_provider/db_helper.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
@@ -52,16 +53,22 @@ class _ProductListState extends State<ProductList> {
         title: Text("Product List"),
         centerTitle: true,
         actions: [
-          Center(
-            child: Badge(
-              badgeContent: Consumer<CartProvider>(
-                builder: (context, value, child) {
-                  return Text(value.getCounter().toString(),
-                      style: TextStyle(color: Colors.white));
-                },
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CartScreen()));
+            },
+            child: Center(
+              child: Badge(
+                badgeContent: Consumer<CartProvider>(
+                  builder: (context, value, child) {
+                    return Text(value.getCounter().toString(),
+                        style: TextStyle(color: Colors.white));
+                  },
+                ),
+                animationDuration: Duration(microseconds: 300),
+                child: Icon(Icons.shopping_bag),
               ),
-              animationDuration: Duration(microseconds: 300),
-              child: Icon(Icons.shopping_bag),
             ),
           ),
           SizedBox(
@@ -174,7 +181,7 @@ class _ProductListState extends State<ProductList> {
                         ],
                       ),
                     );
-                  }))
+                  })),
         ],
       ),
     );

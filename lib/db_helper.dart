@@ -35,35 +35,28 @@ class DBHelper {
     return cart;
   }
 
-  Future<List<Cart>> getCartList(Cart cart) async {
+  Future<List<Cart>> getCartList() async {
     var dbClient = await database;
     final List<Map<String, Object?>> queryResult =
         await dbClient!.query('cart');
     return queryResult.map((e) => Cart.formMap(e)).toList();
   }
 
-  // Future<List> getCartList() async {
-  //   var dbClient = await database;
-  //   final List<Map<String, Object?>> queryResult =
-  //   await dbClient!.query('cart');
-  //   return queryResult.map((result) => Cart.fromMap(result)).toList();
-  // }
-  //
-  // Future<int> deleteCartItem(int id) async {
-  //   var dbClient = await database;
-  //   return await dbClient!.delete('cart', where: 'id = ?', whereArgs: [id]);
-  // }
+  Future<int> deleteCartItem(int id) async {
+    var dbClient = await database;
+    return await dbClient!.delete('cart', where: 'id = ?', whereArgs: [id]);
+  }
 
-  // Future<int> updateQuantity(Cart cart) async {
-  //   var dbClient = await database;
-  //   return await dbClient!.update('cart', cart.quantityMap(),
-  //       where: "productId = ?", whereArgs: [cart.productId]);
-  // }
+  Future<int> updateQuantity(Cart cart) async {
+    var dbClient = await database;
+    return await dbClient!.update('cart', cart.toMap(),
+        where: "productId = ?", whereArgs: [cart.productId]);
+  }
 
-  // Future<List<Cart>> getCartId(int id) async {
-  //   var dbClient = await database;
-  //   final List<Map<String, Object?>> queryIdResult =
-  //   await dbClient!.query('cart', where: 'id = ?', whereArgs: [id]);
-  //   return queryIdResult.map((e) => Cart.fromMap(e)).toList();
-  // }
+// Future<List<Cart>> getCartId(int id) async {
+//   var dbClient = await database;
+//   final List<Map<String, Object?>> queryIdResult =
+//   await dbClient!.query('cart', where: 'id = ?', whereArgs: [id]);
+//   return queryIdResult.map((e) => Cart.fromMap(e)).toList();
+// }
 }
